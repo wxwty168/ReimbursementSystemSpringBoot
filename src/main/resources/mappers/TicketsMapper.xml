@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--这个是sql映射文件，是用来写sql语句的，通常一个表对应一个sql映射文件-->
+
+<!--指定约束文件：mybatis-3-mapper是约束文件的名称
+    约束文件的作用：限制和检查在当前文件中出现的标签和属性必须要符合Mybatis的要求-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace目前可以自定义要唯一，将来面向接口编程时对应dao接口，一
+个mapper相当于web阶段的dao接口的实现类 -->
+
+<!--mapper标签是当前文件的根标签
+    namespace：命名空间，值可以自定义，是唯一的，要求使用dao接口的全限定名称-->
+<mapper namespace="com.jxd.mptest.dao.ITicketsDao">
+    <!--在映射文件中使用特定的标签，表示数据库中特点的操作
+        <select>：表示查询操作
+        id：要执行的sql语句的唯一标识，要求使用的是dao接口的方法的方法名称
+        resultType：表示结果类型，是sql语句执行后得到ResultSet结果集，
+                    遍历ResultSet结果集得到的一个java对象类型
+        -->
+
+    <!--IPage<Map<String,Object>> selectTicketsByEno(Page<Map<String,Object>> pages,
+                                                 @Param("departu") String departure,
+                                                 @Param("destination") String destination,
+                                                 @Param("eno") int eno);-->
+    <select id="selectTicketsByEno" resultType="java.util.Map">
+        SELECT tk.ticket_id as ticketId, # 车票Id
+               tk.eno, # 员工编号
+               tk.departure as departureCityId, # 出发城市ID
+               concat(d2.areaName,' ',d.areaName) as departure, # 出发省市名
+               tk.destination as destinationCityId, # 到达城市ID
+               concat(d4.areaName,' ',d3.areaName) as destination, # 到达省市名
+               date_format(tk.departure_time, '%Y-%m-%d %H:%i:%s') as departureTime, # 出发时间
+               date_format(tk.arrival_time, '%Y-%m-%d %H:%i:%s') as arrivalTime, # 到达时间
+               tk.transportation_id as transportationId, # 交通工具ID
+               tp.transportation_name as transportationName, # 交通工具名
+               tk.reimbursement_amount as reimbursementAmount, # 报销金额
+               tk.ticket_photo_url as ticketPhotoUrl, # 车票照片url
+               tk.trip_description as tripDescription, # 行程说明
+               tk.travel_id as travelId # 关联的差旅ID
+        FROM tickets tk
+                 LEFT JOIN district d on d.areaId = tk.departure # 获取出发城市信息
+                 LEFT JOIN district d2 on d2.areaId = d.parentId # 获取出发省信息
+                 LEFT JOIN district d3 on d3.areaId = tk.destination # 获取到达城市信息
+                 LEFT JOIN district d4 on d4.areaId = d3.parentId # 获取到达省信息
+                 LEFT JOIN transportations tp on tp.transportation_id = tk.transportation_id #获取交通工具信息
+        WHERE eno = #{eno}
+          AND (d.areaName LIKE '%' #{departure} '%' OR d2.areaName LIKE '%' #{departure} '%')
+          AND (d3.areaName LIKE '%' #{destination} '%' OR d4.areaName LIKE '%' #{destination} '%')
+    </select>
+
+    <select id="selectTicketByIdForEdit" resultType="java.util.Map">
+        SELECT tk.ticket_id AS ticketId, # 车票Id
+               tk.eno, # 员工编号
+               d.parentId AS departureProvince, # 出发省id
+               tk.departure AS departure, # 出发城市ID
+               d3.parentId AS destinationProvince, # 到达省id
+               tk.destination AS destination, # 到达城市ID
+               date_format(tk.departure_time, '%Y-%m-%d %H:%i:%s') AS departureTime, # 出发时间
+               date_format(tk.arrival_time, '%Y-%m-%d %H:%i:%s') AS arrivalTime, # 到达时间
+               tk.transportation_id AS transportationId, # 交通工具ID
+               tk.reimbursement_amount AS reimbursementAmount, # 报销金额
+               tk.ticket_photo_url AS ticketPhotoUrl, # 车票照片url
+               tk.trip_description AS tripDescription, # 行程说明
+               tk.travel_id AS travelId # 关联的差旅ID
+        FROM tickets tk
+                 LEFT JOIN district d ON d.areaId = tk.departure # 获取出发城市信息
+                 LEFT JOIN district d3 ON d3.areaId = tk.destination # 获取到达城市信息
+        WHERE tk.ticket_id = #{ticketId}
+    </select>
+</mapper>

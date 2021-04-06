@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--这个是sql映射文件，是用来写sql语句的，通常一个表对应一个sql映射文件-->
+
+<!--指定约束文件：mybatis-3-mapper是约束文件的名称
+    约束文件的作用：限制和检查在当前文件中出现的标签和属性必须要符合Mybatis的要求-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace目前可以自定义要唯一，将来面向接口编程时对应dao接口，一
+个mapper相当于web阶段的dao接口的实现类 -->
+
+<!--mapper标签是当前文件的根标签
+    namespace：命名空间，值可以自定义，是唯一的，要求使用dao接口的全限定名称-->
+<mapper namespace="com.jxd.mptest.dao.ITransportationDao">
+    <!--在映射文件中使用特定的标签，表示数据库中特点的操作
+        <select>：表示查询操作
+        id：要执行的sql语句的唯一标识，要求使用的是dao接口的方法的方法名称
+        resultType：表示结果类型，是sql语句执行后得到ResultSet结果集，
+                    遍历ResultSet结果集得到的一个java对象类型
+        -->
+
+    <select id="getAllTransportations" resultType="com.jxd.mptest.model.Transportations">
+        SELECT tp.transportation_id AS transportationId,
+               tp.transportation_name AS transportationName
+        FROM transportations tp
+    </select>
+</mapper>
