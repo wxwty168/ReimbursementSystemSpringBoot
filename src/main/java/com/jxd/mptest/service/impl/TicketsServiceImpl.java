@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -57,6 +58,19 @@ public class TicketsServiceImpl extends ServiceImpl<ITicketsDao, Tickets>
     @Override
     public Map<String, Object> selectTicketByIdForEdit(int ticketId) {
         return ticketsDao.selectTicketByIdForEdit(ticketId);
+    }
+
+    /**
+     * 获取报销人当前报销单下可选的车票列表
+     *
+     * @param eno           报销人工号
+     * @param travelId      报销单号
+     * @param chosenTickets 已选的车票列表
+     * @return List<Map < String, Object>>
+     */
+    @Override
+    public List<Map<String, Object>> selectAvailableTicketsByEnoAndTravelId(int eno, String travelId, List<Integer> chosenTickets) {
+        return ticketsDao.selectAvailableTicketsByEnoAndTravelId(eno, travelId, chosenTickets);
     }
 
 }

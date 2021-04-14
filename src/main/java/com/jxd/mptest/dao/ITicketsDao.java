@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jxd.mptest.model.Tickets;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -33,4 +34,16 @@ public interface ITicketsDao extends BaseMapper<Tickets> {
      * @return Map
      */
     Map<String,Object> selectTicketByIdForEdit(@Param("ticketId") int ticketId);
+
+    /**
+     * 获取报销人当前报销单下可选的车票列表
+     * @param eno 报销人工号
+     * @param travelId 报销单号
+     * @param chosenTickets 已选的车票列表
+     * @return List<Map<String, Object>>
+     */
+    List<Map<String, Object>> selectAvailableTicketsByEnoAndTravelId(@Param("eno") int eno,
+                                                                     @Param("travelId") String travelId,
+                                                                     @Param("chosenTickets") List<Integer> chosenTickets);
+
 }

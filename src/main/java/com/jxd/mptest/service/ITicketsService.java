@@ -3,6 +3,7 @@ package com.jxd.mptest.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.jxd.mptest.model.Tickets;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,4 +30,13 @@ public interface ITicketsService extends IService<Tickets> {
      * @return Map
      */
     Map<String,Object> selectTicketByIdForEdit(int ticketId);
+
+    /**
+     * 获取报销人当前报销单下可选的车票列表
+     * @param eno 报销人工号
+     * @param travelId 报销单号
+     * @param chosenTickets 已选的车票列表
+     * @return List<Map<String, Object>>
+     */
+    List<Map<String, Object>> selectAvailableTicketsByEnoAndTravelId(int eno, String travelId, List<Integer> chosenTickets);
 }
