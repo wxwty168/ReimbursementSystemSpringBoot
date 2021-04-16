@@ -1,5 +1,6 @@
 package com.jxd.mptest.controller;
 
+import com.jxd.mptest.service.ITicketsService;
 import com.jxd.mptest.service.ITravelInformationService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,9 @@ public class TravelListController {
     @Resource
     private ITravelInformationService travelInformationService;
 
+    @Resource
+    private ITicketsService ticketsService;
+
     @RequestMapping("/getTravels")
     public Map<String, Object> getTravels(@RequestBody Map<String, String> queryMap){
         int limit = Integer.parseInt(queryMap.get("limit"));
@@ -33,6 +37,9 @@ public class TravelListController {
     @RequestMapping("/delTravelsOnBatch")
     public String delTravelsOnBatch(@RequestBody List<Integer> travelIds){
         if (travelInformationService.removeByIds(travelIds)){
+            for(int travelId : travelIds){
+                ticketsService.unBindTicketsFromTravel(travelId);
+            }
             return "success";
         }else {
             return "fail";

@@ -19,7 +19,7 @@
         -->
     <!--Employees doLogin(Employees employees);-->
     <select id="doLogin" resultType="com.jxd.mptest.model.Employees">
-        SELECT eno, ename, is_admin FROM employees
+        SELECT eno, ename, is_admin,avatar_url FROM employees
         WHERE eno = #{eno}
           AND password = #{password}
     </select>

@@ -126,4 +126,20 @@ public class TravelInformation {
     public void setTotalReimbursement(Double totalReimbursement) {
         this.totalReimbursement = totalReimbursement;
     }
+
+    @Override
+    public String toString() {
+        return "TravelInformation{" +
+                "travelId=" + travelId +
+                ", eno=" + eno +
+                ", firstDepartureTime='" + firstDepartureTime + '\'' +
+                ", lastArrivalTime='" + lastArrivalTime + '\'' +
+                ", daysOfTravel=" + daysOfTravel +
+                ", travelDescription='" + travelDescription + '\'' +
+                ", submitTime='" + submitTime + '\'' +
+                ", subsidyAmount=" + subsidyAmount +
+                ", totalReimbursement=" + totalReimbursement +
+                ", passed=" + passed +
+                '}';
+    }
 }

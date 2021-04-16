@@ -39,4 +39,26 @@ public interface ITicketsService extends IService<Tickets> {
      * @return List<Map<String, Object>>
      */
     List<Map<String, Object>> selectAvailableTicketsByEnoAndTravelId(int eno, String travelId, List<Integer> chosenTickets);
+
+    /**
+     * 取消所有车票对该差旅Id的绑定
+     * @param travelId 需要取消绑定的差旅id
+     * @return Boolean
+     */
+    Boolean unBindTicketsFromTravel(int travelId);
+
+    /**
+     * 将车票绑定到差旅上
+     * @param travelId 差旅Id
+     * @param ticketList 车票列表
+     * @return Boolean
+     */
+    Boolean bindTicketsToTravel(int travelId, List<Integer> ticketList);
+
+    /**
+     * 通过绑定的travelId获取车票列表
+     * @param travelId 差旅Id
+     * @return List<Map<String, Object>>
+     */
+    List<Map<String, Object>> getTicketsListByTravelId(int travelId);
 }

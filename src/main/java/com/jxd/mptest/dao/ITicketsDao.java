@@ -46,4 +46,25 @@ public interface ITicketsDao extends BaseMapper<Tickets> {
                                                                      @Param("travelId") String travelId,
                                                                      @Param("chosenTickets") List<Integer> chosenTickets);
 
+    /**
+     * 取消所有车票对该差旅Id的绑定
+     * @param travelId 需要取消绑定的差旅id
+     * @return Boolean
+     */
+    Boolean unBindTicketsFromTravel(@Param("travelId") int travelId);
+
+    /**
+     * 将车票绑定到差旅上
+     * @param TravelId 差旅Id
+     * @param ticketList 车票列表
+     */
+    Boolean bindTicketsToTravel(@Param("travelId") int TravelId,
+                                @Param("ticketList") List<Integer> ticketList);
+
+    /**
+     * 通过绑定的travelId获取车票列表
+     * @param travelId 差旅Id
+     * @return List<Map<String, Object>>
+     */
+    List<Map<String, Object>> getTicketsListByTravelId(int travelId);
 }

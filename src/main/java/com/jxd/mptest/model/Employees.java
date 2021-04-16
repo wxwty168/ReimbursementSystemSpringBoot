@@ -18,17 +18,28 @@ public class Employees {
     private String phone;//电话
     @TableField (value = "is_admin")
     private Integer isAdmin;//是否管理员
+    @TableField (value = "avatar_url")
+    private String avatarUrl;
 
     public Employees() {
     }
 
-    public Employees(Integer eno, String ename, String password, Integer sex, String phone, Integer isAdmin) {
+    public Employees(Integer eno, String ename, String password, Integer sex, String phone, Integer isAdmin, String avatarUrl) {
         this.eno = eno;
         this.ename = ename;
         this.password = password;
         this.sex = sex;
         this.phone = phone;
         this.isAdmin = isAdmin;
+        this.avatarUrl = avatarUrl;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 
     public Integer getEno() {
@@ -88,6 +99,7 @@ public class Employees {
                 ", sex=" + sex +
                 ", phone='" + phone + '\'' +
                 ", isAdmin=" + isAdmin +
+                ", avatarUrl='" + avatarUrl + '\'' +
                 '}';
     }
 }
