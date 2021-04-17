@@ -48,4 +48,43 @@ public class TravelInformationServiceImpl extends ServiceImpl<ITravelInformation
 
         return map;
     }
+
+    /**
+     * 为差旅审核页面获取数据
+     *
+     * @param limit     每页显示条数
+     * @param page      当前页码
+     * @param travelId  差旅编号
+     * @param ename     员工姓名
+     * @param timeStart 起始时间
+     * @param timeEnd   结束时间
+     * @param passed    是否通过审核
+     * @return Map<String, Object>
+     */
+    @Override
+    public Map<String, Object> getTravelsToReview(int limit, int page, String travelId, String ename, String timeStart, String timeEnd, int passed) {
+        // 构造MyBatis-Plus的分页对象
+        Page<Map<String,Object>> pages = new Page<>(page,limit);
+
+        Map<String,Object> map = new HashMap<>();
+        // 调用dao层获取数据
+        IPage<Map<String, Object>> result = travelInformationDao.getTravelsToReview(pages,travelId,ename,timeStart,timeEnd,passed);
+        map.put("travels",result.getRecords());
+        map.put("total",result.getTotal());// 总条数
+        map.put("pageCount",result.getPages());
+
+        return map;
+    }
+
+    /**
+     * 审核旅程,修改passed信息
+     *
+     * @param travelId 旅程id
+     * @param passed   是否通过
+     * @return boolean
+     */
+    @Override
+    public Boolean submitReviewTravel(int travelId, int passed) {
+        return travelInformationDao.submitReviewTravel(travelId,passed);
+    }
 }

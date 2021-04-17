@@ -64,7 +64,7 @@
 
     <select id="selectTicketByIdForEdit" resultType="java.util.Map">
         SELECT tk.ticket_id AS ticketId, # 车票Id
-               tk.eno, # 员工编号
+               tk.eno AS eno, # 员工编号
                d.parentId AS departureProvince, # 出发省id
                tk.departure AS departure, # 出发城市ID
                d3.parentId AS destinationProvince, # 到达省id

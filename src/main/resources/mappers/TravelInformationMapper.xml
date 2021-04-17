@@ -11,6 +11,7 @@
 <!--mapper标签是当前文件的根标签
     namespace：命名空间，值可以自定义，是唯一的，要求使用dao接口的全限定名称-->
 <mapper namespace="com.jxd.mptest.dao.ITravelInformationDao">
+
     <!--在映射文件中使用特定的标签，表示数据库中特点的操作
         <select>：表示查询操作
         id：要执行的sql语句的唯一标识，要求使用的是dao接口的方法的方法名称
@@ -18,12 +19,18 @@
                     遍历ResultSet结果集得到的一个java对象类型
         -->
 
+    <update id="submitReviewTravel">
+        UPDATE travel_information
+            SET passed = #{passed}
+        WHERE travel_id = #{travelId}
+    </update>
+
 
     <select id="getTravelsByEnoAndQueries" resultType="com.jxd.mptest.model.TravelInformation">
         SELECT travel_id,
                eno,
-               date_format(first_departure_time, '%Y-%m-%d %H:%i:%s') as firstDepartureTime,
-               date_format(last_arrival_time, '%Y-%m-%d %H:%i:%s') as lastArrivalTime,
+               date_format(first_departure_time, '%Y-%m-%d %H:%i:%s') AS firstDepartureTime,
+               date_format(last_arrival_time, '%Y-%m-%d %H:%i:%s') AS lastArrivalTime,
                days_of_travel,
                travel_description,
                date_format(submit_time, '%Y-%m-%d') AS submitTime,
@@ -42,5 +49,32 @@
             AND DATE_ADD(#{timeEnd},INTERVAL 1 DAY) > last_arrival_time
         </if>
 
+    </select>
+    <select id="getTravelsToReview" resultType="java.util.Map">
+        SELECT t.travel_id AS travelId,
+               t.eno,
+               e.ename,
+               date_format(t.first_departure_time, '%Y-%m-%d %H:%i:%s') AS firstDepartureTime,
+               date_format(t.last_arrival_time, '%Y-%m-%d %H:%i:%s') AS lastArrivalTime,
+               t.days_of_travel AS daysOfTravel,
+               t.travel_description AS travelDescription,
+               date_format(t.submit_time, '%Y-%m-%d') AS submitTime,
+               t.subsidy_amount AS subsidyAmount,
+               t.total_reimbursement AS totalReimbursement,
+               t.passed
+        FROM travel_information t LEFT JOIN employees e ON t.eno = e.eno
+        WHERE t.passed = #{passed}
+            <if test=" travelId != null and travelId != '' ">
+                AND t.travel_id = #{travelId}
+            </if >
+            <if test=" ename != null and ename != '' ">
+                AND e.ename LIKE '%' #{ename} '%'
+            </if >
+            <if test=" timeStart != null and timeStart != '' ">
+                AND t.submit_time >= #{timeStart}
+            </if>
+            <if test=" timeEnd != null and timeEnd != '' ">
+                AND DATE_ADD(#{timeEnd},INTERVAL 1 MONTH) > t.submit_time
+            </if>
     </select>
 </mapper>

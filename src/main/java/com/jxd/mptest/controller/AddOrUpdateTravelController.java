@@ -70,6 +70,8 @@ public class AddOrUpdateTravelController {
         travel.setTotalReimbursement(Double.parseDouble(form.get("totalReimbursement").toString()));
         travel.setTravelDescription(form.get("travelDescription").toString());
         travel.setSubmitTime(form.get("submitTime").toString());
+        // 如果是更新未通过的车票列表需要将其设置为待审核
+        travel.setPassed(0);
 
         // 获取需要更新的车票Id
         List<Integer> selectedTickets = objectsToIntegerList(form.get("selectedTickets"));

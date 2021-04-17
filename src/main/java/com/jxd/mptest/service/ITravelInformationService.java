@@ -23,4 +23,25 @@ public interface ITravelInformationService extends IService<TravelInformation> {
      * @return Map<String, Object>
      */
     Map<String, Object> getTravelsByEnoAndQueries(int limit, int page, String travelId,String timeStart, String timeEnd, int eno);
+
+    /**
+     * 为差旅审核页面获取数据
+     * @param limit 每页显示条数
+     * @param page 当前页码
+     * @param travelId 差旅编号
+     * @param ename 员工姓名
+     * @param timeStart 起始时间
+     * @param timeEnd 结束时间
+     * @param passed 是否通过审核
+     * @return Map<String, Object>
+     */
+    Map<String, Object> getTravelsToReview(int limit, int page, String travelId, String ename, String timeStart, String timeEnd, int passed);
+
+    /**
+     * 审核旅程,修改passed信息
+     * @param travelId 旅程id
+     * @param passed 是否通过
+     * @return boolean
+     */
+    Boolean submitReviewTravel(int travelId,int passed);
 }
