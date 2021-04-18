@@ -16,4 +16,6 @@ public interface IEmployeesDao extends BaseMapper<Employees> {
      * @return Employees
      */
     Employees doLogin(Employees employee);
+
+    boolean changePassword(@Param("eno") int eno,@Param("password") String password);
 }

@@ -48,6 +48,9 @@
         <if test=" timeEnd != null and timeEnd != '' ">
             AND DATE_ADD(#{timeEnd},INTERVAL 1 DAY) > last_arrival_time
         </if>
+          <if test=" passed != null and passed != '' ">
+            AND passed = #{passed}
+        </if>
 
     </select>
     <select id="getTravelsToReview" resultType="java.util.Map">

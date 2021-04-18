@@ -24,6 +24,11 @@ public class Employees {
     public Employees() {
     }
 
+    public Employees(Integer eno, String password) {
+        this.eno = eno;
+        this.password = password;
+    }
+
     public Employees(Integer eno, String ename, String password, Integer sex, String phone, Integer isAdmin, String avatarUrl) {
         this.eno = eno;
         this.ename = ename;

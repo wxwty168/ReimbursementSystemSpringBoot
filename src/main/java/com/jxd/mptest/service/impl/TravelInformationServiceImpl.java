@@ -35,13 +35,13 @@ public class TravelInformationServiceImpl extends ServiceImpl<ITravelInformation
      * @return Map<String, Object>
      */
     @Override
-    public Map<String, Object> getTravelsByEnoAndQueries(int limit, int page, String travelId, String timeStart, String timeEnd, int eno) {
+    public Map<String, Object> getTravelsByEnoAndQueries(int limit, int page, String travelId, String timeStart, String timeEnd, int eno,String passed) {
         // 构造MyBatis-Plus的分页对象
         Page<Map<String,Object>> pages = new Page<>(page,limit);
 
         Map<String,Object> map = new HashMap<>();
         // 调用dao层获取数据
-        IPage<TravelInformation> result = travelInformationDao.getTravelsByEnoAndQueries(pages,travelId,timeStart,timeEnd,eno);
+        IPage<TravelInformation> result = travelInformationDao.getTravelsByEnoAndQueries(pages,travelId,timeStart,timeEnd,eno,passed);
         map.put("travels",result.getRecords());
         map.put("total",result.getTotal());// 总条数
         map.put("pageCount",result.getPages());

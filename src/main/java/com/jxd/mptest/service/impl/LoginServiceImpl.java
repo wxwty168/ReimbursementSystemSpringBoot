@@ -24,4 +24,9 @@ public class LoginServiceImpl extends ServiceImpl<IEmployeesDao, Employees>
     public Employees doLogin(Employees employee) {
         return employeesDao.doLogin(employee);
     }
+
+    @Override
+    public boolean changePassword(int eno, String password) {
+        return employeesDao.changePassword(eno,password);
+    }
 }

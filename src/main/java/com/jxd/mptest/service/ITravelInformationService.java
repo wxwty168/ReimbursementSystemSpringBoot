@@ -22,7 +22,7 @@ public interface ITravelInformationService extends IService<TravelInformation> {
      * @param eno 员工编号
      * @return Map<String, Object>
      */
-    Map<String, Object> getTravelsByEnoAndQueries(int limit, int page, String travelId,String timeStart, String timeEnd, int eno);
+    Map<String, Object> getTravelsByEnoAndQueries(int limit, int page, String travelId,String timeStart, String timeEnd, int eno,String passed);
 
     /**
      * 为差旅审核页面获取数据

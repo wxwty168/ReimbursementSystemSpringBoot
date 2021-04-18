@@ -10,4 +10,5 @@ import com.jxd.mptest.model.Employees;
  */
 public interface ILoginService extends IService<Employees> {
     Employees doLogin(Employees employee);
+    boolean changePassword(int eno,String password);
 }

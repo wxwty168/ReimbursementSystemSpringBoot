@@ -31,7 +31,8 @@ public class TravelListController {
         String travelId = queryMap.get("travelId");
         String timeStart = queryMap.get("timeStart");
         String timeEnd = queryMap.get("timeEnd");
-        return travelInformationService.getTravelsByEnoAndQueries(limit,page,travelId,timeStart,timeEnd,eno);
+        String passed = queryMap.get("passed");
+        return travelInformationService.getTravelsByEnoAndQueries(limit,page,travelId,timeStart,timeEnd,eno,passed);
     }
 
     @RequestMapping("/delTravelsOnBatch")

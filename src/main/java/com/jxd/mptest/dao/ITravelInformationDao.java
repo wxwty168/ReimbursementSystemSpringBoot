@@ -28,7 +28,8 @@ public interface ITravelInformationDao extends BaseMapper<TravelInformation> {
                                                         @Param("travelId") String travelId,
                                                         @Param("timeStart") String timeStart,
                                                         @Param("timeEnd") String timeEnd,
-                                                        @Param("eno") int eno);
+                                                        @Param("eno") int eno,
+                                                        @Param("passed") String passed);
 
 
     IPage<Map<String, Object>> getTravelsToReview(Page<Map<String,Object>> pages,

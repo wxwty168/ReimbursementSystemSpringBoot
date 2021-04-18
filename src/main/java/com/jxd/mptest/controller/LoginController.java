@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @description:
@@ -36,5 +37,26 @@ public class LoginController {
         }
         statusList.add(fullEmpInfo);
         return statusList;
+    }
+
+    @PostMapping("/changePassword")
+    public int changePassword(@RequestBody Map<String, String> pwdForm){
+        int eno = Integer.parseInt(pwdForm.get("eno"));
+        String password = pwdForm.get("password");
+        String newPassword = pwdForm.get("newPassword");
+        Employees employee = new Employees(eno,password);
+        employee = loginService.doLogin(employee);
+
+
+        if (null != employee){
+            // 原密码正确且修改成功
+            if (loginService.changePassword(eno,newPassword)){
+                return 0;
+            }else {// 修改失败
+                return 1;
+            }
+        }else {// 原密码不正确
+            return 2;
+        }
     }
 }
