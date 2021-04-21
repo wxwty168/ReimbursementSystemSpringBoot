@@ -20,6 +20,9 @@ public class Employees {
     private Integer isAdmin;//是否管理员
     @TableField (value = "avatar_url")
     private String avatarUrl;
+    @TableField (value = "is_deleted")
+    private Integer isDeleted;// 是否删除员工
+    private Integer rank;// 员工职级
 
     public Employees() {
     }
@@ -29,7 +32,7 @@ public class Employees {
         this.password = password;
     }
 
-    public Employees(Integer eno, String ename, String password, Integer sex, String phone, Integer isAdmin, String avatarUrl) {
+    public Employees(Integer eno, String ename, String password, Integer sex, String phone, Integer isAdmin, String avatarUrl, Integer isDeleted, Integer rank) {
         this.eno = eno;
         this.ename = ename;
         this.password = password;
@@ -37,6 +40,24 @@ public class Employees {
         this.phone = phone;
         this.isAdmin = isAdmin;
         this.avatarUrl = avatarUrl;
+        this.isDeleted = isDeleted;
+        this.rank = rank;
+    }
+
+    public Integer getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Integer isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
+    public Integer getRank() {
+        return rank;
+    }
+
+    public void setRank(Integer rank) {
+        this.rank = rank;
     }
 
     public String getAvatarUrl() {

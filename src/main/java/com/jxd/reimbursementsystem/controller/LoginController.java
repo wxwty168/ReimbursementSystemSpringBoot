@@ -1,7 +1,7 @@
 package com.jxd.reimbursementsystem.controller;
 
 import com.jxd.reimbursementsystem.model.Employees;
-import com.jxd.reimbursementsystem.service.ILoginService;
+import com.jxd.reimbursementsystem.service.IEmployeeService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,13 +21,13 @@ import java.util.Map;
 public class LoginController {
 
     @Resource
-    private ILoginService loginService;
+    private IEmployeeService employeeService;
 
 
     @PostMapping("/login")
     public List<Object> login(@RequestBody Employees employee){
 //        System.out.println(employee.getEno()+"_"+employee.getPassword());
-        Employees fullEmpInfo = loginService.doLogin(employee);
+        Map<String, Object> fullEmpInfo = employeeService.doLogin(employee);
         List<Object> statusList = new ArrayList<>();
 
         if (null != fullEmpInfo){
@@ -45,12 +45,12 @@ public class LoginController {
         String password = pwdForm.get("password");
         String newPassword = pwdForm.get("newPassword");
         Employees employee = new Employees(eno,password);
-        employee = loginService.doLogin(employee);
+        Map<String, Object> fullEmpInfo = employeeService.doLogin(employee);
 
 
-        if (null != employee){
+        if (null != fullEmpInfo){
             // 原密码正确且修改成功
-            if (loginService.changePassword(eno,newPassword)){
+            if (employeeService.changePassword(eno,newPassword)){
                 return 0;
             }else {// 修改失败
                 return 1;

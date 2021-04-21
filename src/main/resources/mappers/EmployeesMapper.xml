@@ -22,10 +22,44 @@
     <update id="changePassword">
         UPDATE employees SET password = #{password} WHERE eno = #{eno}
     </update>
+
+    <update id="updateIsDeletedOnBatch">
+        UPDATE employees e
+        SET e.is_deleted = #{setIsDeleted}
+        WHERE e.eno in
+        <foreach item="item" collection="enos"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+    <update id="resetPassword">
+        UPDATE employees SET password = '123' WHERE eno = #{eno}
+    </update>
     <!--Employees doLogin(Employees employees);-->
-    <select id="doLogin" resultType="com.jxd.reimbursementsystem.model.Employees">
-        SELECT eno, ename, is_admin,avatar_url FROM employees
-        WHERE eno = #{eno}
-          AND password = #{password}
+    <select id="doLogin" resultType="java.util.Map">
+        SELECT e.eno,
+               e.ename,
+               e.is_admin AS isAdmin,
+               e.avatar_url AS avatarUrl,
+               e.`rank`,
+               er.title,
+               er.daily_allowance AS dailyAllowance
+        FROM employees e
+            LEFT JOIN employee_rank er on e.`rank` = er.`rank`
+        WHERE e.eno = #{eno}
+          AND e.password = #{password}
+          AND e.is_deleted = 0
+    </select>
+    <select id="selectEmployeesByEnoAndEname" resultType="java.util.Map">
+        SELECT e.eno, e.ename, e.sex, e.phone, e.`rank`,er.title
+        FROM employees e LEFT OUTER JOIN employee_rank er on er.`rank` = e.`rank`
+        WHERE e.is_deleted = #{isDeleted}
+            <if test=" eno != null and eno != '' ">
+                AND e.eno = #{eno}
+            </if>
+            <if test=" ename != null and ename != '' ">
+                AND e.ename LIKE '%' #{ename} '%'
+            </if>
+
     </select>
 </mapper>

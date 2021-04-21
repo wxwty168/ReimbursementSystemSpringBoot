@@ -1,6 +1,6 @@
 import com.jxd.reimbursementsystem.MPApplication;
 import com.jxd.reimbursementsystem.model.Employees;
-import com.jxd.reimbursementsystem.service.ILoginService;
+import com.jxd.reimbursementsystem.service.IEmployeeService;
 import com.jxd.reimbursementsystem.service.ITicketsService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,7 +21,7 @@ import java.io.File;
 @SpringBootTest(classes = MPApplication.class)
 public class TestDao {
     @Resource
-    private ILoginService loginService;
+    private IEmployeeService loginService;
 
     @Resource
     private ITicketsService ticketsService;
