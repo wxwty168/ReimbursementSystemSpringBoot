@@ -10,7 +10,7 @@
 
 <!--mapper标签是当前文件的根标签
     namespace：命名空间，值可以自定义，是唯一的，要求使用dao接口的全限定名称-->
-<mapper namespace="com.jxd.mptest.dao.ITravelInformationDao">
+<mapper namespace="com.jxd.reimbursementsystem.dao.ITravelInformationDao">
 
     <!--在映射文件中使用特定的标签，表示数据库中特点的操作
         <select>：表示查询操作
@@ -26,7 +26,7 @@
     </update>
 
 
-    <select id="getTravelsByEnoAndQueries" resultType="com.jxd.mptest.model.TravelInformation">
+    <select id="getTravelsByEnoAndQueries" resultType="com.jxd.reimbursementsystem.model.TravelInformation">
         SELECT travel_id,
                eno,
                date_format(first_departure_time, '%Y-%m-%d %H:%i:%s') AS firstDepartureTime,

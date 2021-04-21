@@ -10,7 +10,7 @@
 
 <!--mapper标签是当前文件的根标签
     namespace：命名空间，值可以自定义，是唯一的，要求使用dao接口的全限定名称-->
-<mapper namespace="com.jxd.mptest.dao.IEmployeesDao">
+<mapper namespace="com.jxd.reimbursementsystem.dao.IEmployeesDao">
 
     <!--在映射文件中使用特定的标签，表示数据库中特点的操作
         <select>：表示查询操作
@@ -23,7 +23,7 @@
         UPDATE employees SET password = #{password} WHERE eno = #{eno}
     </update>
     <!--Employees doLogin(Employees employees);-->
-    <select id="doLogin" resultType="com.jxd.mptest.model.Employees">
+    <select id="doLogin" resultType="com.jxd.reimbursementsystem.model.Employees">
         SELECT eno, ename, is_admin,avatar_url FROM employees
         WHERE eno = #{eno}
           AND password = #{password}

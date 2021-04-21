@@ -1,18 +1,14 @@
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.jxd.mptest.MPApplication;
-import com.jxd.mptest.model.Employees;
-import com.jxd.mptest.service.ILoginService;
-import com.jxd.mptest.service.ITicketsService;
+import com.jxd.reimbursementsystem.MPApplication;
+import com.jxd.reimbursementsystem.model.Employees;
+import com.jxd.reimbursementsystem.service.ILoginService;
+import com.jxd.reimbursementsystem.service.ITicketsService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
 import java.io.File;
-import java.util.List;
 
 /**
  * @description:

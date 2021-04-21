@@ -10,7 +10,7 @@
 
 <!--mapper标签是当前文件的根标签
     namespace：命名空间，值可以自定义，是唯一的，要求使用dao接口的全限定名称-->
-<mapper namespace="com.jxd.mptest.dao.IDistrictDao">
+<mapper namespace="com.jxd.reimbursementsystem.dao.IDistrictDao">
     <!--在映射文件中使用特定的标签，表示数据库中特点的操作
         <select>：表示查询操作
         id：要执行的sql语句的唯一标识，要求使用的是dao接口的方法的方法名称
@@ -18,11 +18,11 @@
                     遍历ResultSet结果集得到的一个java对象类型
         -->
 
-    <select id="getAllProvinces" resultType="com.jxd.mptest.model.District">
+    <select id="getAllProvinces" resultType="com.jxd.reimbursementsystem.model.District">
         SELECT d.areaId,d.areaName FROM district d WHERE level = 1
     </select>
 
-    <select id="getDepartureCities" resultType="com.jxd.mptest.model.District">
+    <select id="getDepartureCities" resultType="com.jxd.reimbursementsystem.model.District">
         SELECT d.areaId,d.areaName FROM district d WHERE d.parentId = #{provinceId}
     </select>
 </mapper>
