@@ -44,4 +44,23 @@ public interface ITravelInformationService extends IService<TravelInformation> {
      * @return boolean
      */
     Boolean submitReviewTravel(int travelId,int passed);
+
+    /**
+     * 通过Id获取差旅信息
+     * @param travelId Id
+     * @return Map<String, Object>
+     */
+    Map<String, Object> getTravelByTravelId(int travelId);
+
+    /**
+     * 获取报销的统计数据
+     * @param limit 每页多少数据
+     * @param page 当前第几页
+     * @param ename 员工姓名
+     * @param timeStart 开始日期
+     * @param timeEnd 结束日期
+     * @return Map<String, Object>
+     */
+    Map<String, Object> getReimbursementStatistics(int limit, int page, String ename, String timeStart, String timeEnd);
+
 }

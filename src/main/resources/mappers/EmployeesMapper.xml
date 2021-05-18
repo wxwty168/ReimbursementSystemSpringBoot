@@ -53,7 +53,7 @@
     <select id="selectEmployeesByEnoAndEname" resultType="java.util.Map">
         SELECT e.eno, e.ename, e.sex, e.phone, e.`rank`,er.title
         FROM employees e LEFT OUTER JOIN employee_rank er on er.`rank` = e.`rank`
-        WHERE e.is_deleted = #{isDeleted}
+        WHERE e.is_deleted = #{isDeleted} and eno != 10000
             <if test=" eno != null and eno != '' ">
                 AND e.eno = #{eno}
             </if>

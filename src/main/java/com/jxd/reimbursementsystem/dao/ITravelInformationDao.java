@@ -46,4 +46,24 @@ public interface ITravelInformationDao extends BaseMapper<TravelInformation> {
      * @return boolean
      */
     Boolean submitReviewTravel(@Param("travelId") int travelId,@Param("passed") int passed);
+
+    /**
+     * 通过Id获取差旅信息
+     * @param travelId Id
+     * @return Map<String, Object>
+     */
+    Map<String, Object> getTravelByTravelId(@Param("travelId") int travelId);
+
+    /**
+     *
+     * @param pages 分页对象
+     * @param ename 员工名
+     * @param timeStart 开始时间
+     * @param timeEnd 结束时间
+     * @return IPage<Map<String, Object>>
+     */
+    IPage<Map<String, Object>> getReimbursementStatistics(Page<Map<String,Object>> pages,
+                                                   @Param("ename") String ename,
+                                                   @Param("timeStart") String timeStart,
+                                                   @Param("timeEnd") String timeEnd);
 }

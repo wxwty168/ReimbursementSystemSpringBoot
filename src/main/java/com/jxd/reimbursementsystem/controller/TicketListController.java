@@ -52,62 +52,6 @@ public class TicketListController {
     }
 
     /**
-     * 文件上传
-     * @param picture
-     * @param request
-     * @return
-     */
-    @RequestMapping("/uploadTicketPic")
-    public FileResult uploadTicketPic(@RequestParam("ticketPhoto") MultipartFile picture,@RequestParam("eno") String enoStr, HttpServletRequest request) {
-
-        // 获取当前用户编号
-
-        //获取文件在服务器的储存位置
-        String userPath = basePath + "/" + enoStr;
-        myUtils.checkDirExist(userPath);
-        String ticketsPath = userPath + "/ticketImg";
-        myUtils.checkDirExist(ticketsPath);
-
-        //获取原始文件名称(包含格式)
-        String originalFileName = picture.getOriginalFilename();
-
-        //获取文件类型，以最后一个`.`为标识
-        String type = originalFileName.substring(originalFileName.lastIndexOf(".") + 1);
-        //获取文件名称（不包含格式）
-        String name = originalFileName.substring(0, originalFileName.lastIndexOf("."));
-
-        String fileName = myUtils.getUUID() + "_" + name + "." + type;
-
-        //在指定路径下创建一个文件
-        File targetFile = new File(ticketsPath, fileName);
-        //将文件保存到服务器指定位置
-        try {
-            picture.transferTo(targetFile);
-            //将文件在服务器的存储路径返回
-            return new FileResult(true,fileName,ticketsPath+"/"+fileName);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return new FileResult(false, "上传失败","");
-        }
-    }
-
-    /**
-     * 删除图片
-     * @param map 图片url
-     * @return String
-     */
-    @RequestMapping("/delPic")
-    public String delPic(@RequestBody Map<String,String> map){
-        String eno = map.get("eno");
-        String fileName = map.get("picName");
-        if (myUtils.deleteFile(eno,ticketPhotoPackageName,fileName)){
-            return "success";
-        }else{
-            return "fail";
-        }
-    }
-
-    /**
      * 获取所有省份信息
      * @return List
      */

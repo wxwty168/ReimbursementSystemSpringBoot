@@ -95,7 +95,7 @@ public class AddOrUpdateTravelController {
      */
     @RequestMapping("/getTravelByTravelId/{travelId}")
     public Map<String,Object> getTravelByTravelId(@PathVariable("travelId") int travelId){
-        TravelInformation travel = travelInformationService.getById(travelId);
+        Map<String,Object> travel = travelInformationService.getTravelByTravelId(travelId);
         List<Map<String,Object>> chosenTickets = ticketsService.getTicketsListByTravelId(travelId);
         Map<String, Object> map = new HashMap<>();
         map.put("travelInfo",travel);

@@ -87,4 +87,40 @@ public class TravelInformationServiceImpl extends ServiceImpl<ITravelInformation
     public Boolean submitReviewTravel(int travelId, int passed) {
         return travelInformationDao.submitReviewTravel(travelId,passed);
     }
+
+    /**
+     * 通过Id获取差旅信息
+     *
+     * @param travelId Id
+     * @return Map<String, Object>
+     */
+    @Override
+    public Map<String, Object> getTravelByTravelId(int travelId) {
+        return travelInformationDao.getTravelByTravelId(travelId);
+    }
+
+    /**
+     * 获取报销的统计数据
+     *
+     * @param limit     每页多少数据
+     * @param page      当前第几页
+     * @param ename     员工姓名
+     * @param timeStart 开始日期
+     * @param timeEnd   结束日期
+     * @return Map<String, Object>
+     */
+    @Override
+    public Map<String, Object> getReimbursementStatistics(int limit, int page, String ename, String timeStart, String timeEnd) {
+        // 构造MyBatis-Plus的分页对象
+        Page<Map<String,Object>> pages = new Page<>(page,limit);
+
+        Map<String,Object> map = new HashMap<>();
+        // 调用dao层获取数据
+        IPage<Map<String, Object>> result = travelInformationDao.getReimbursementStatistics(pages,ename,timeStart,timeEnd);
+        map.put("statistics",result.getRecords());
+        map.put("total",result.getTotal());// 总条数
+        map.put("pageCount",result.getPages());
+
+        return map;
+    }
 }
