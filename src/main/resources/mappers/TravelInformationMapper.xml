@@ -96,27 +96,52 @@
             LEFT JOIN employees e on e.eno = t.eno
         WHERE t.travel_id = #{travelId}
     </select>
-    <select id="getReimbursementStatistics" resultType="java.util.Map">
-        SELECT t.eno,
-               e.ename,
-               e.`rank`,
-               er.title,
-               SUM(t.total_reimbursement) AS totalReimbursement,
-               count(0) AS totalTimes
-        FROM travel_information t
-            LEFT JOIN employees e ON t.eno = e.eno
-            LEFT JOIN employee_rank er on e.`rank` = er.`rank`
-        WHERE t.passed = 1
-            <if test=" ename != null and ename != '' ">
-                AND e.ename LIKE '%' #{ename} '%'
-            </if >
-            <if test=" timeStart != null and timeStart != '' ">
-                AND t.submit_time >= #{timeStart}
-            </if>
-            <if test=" timeEnd != null and timeEnd != '' ">
-                AND DATE_ADD(#{timeEnd},INTERVAL 1 MONTH) > t.submit_time
-            </if>
-        GROUP BY t.eno
+<!--    <select id="getReimbursementStatistics" resultType="java.util.Map">-->
+<!--        SELECT t.eno,-->
+<!--               e.ename,-->
+<!--               e.`rank`,-->
+<!--               er.title,-->
+<!--               SUM(t.total_reimbursement) AS totalReimbursement,-->
+<!--               count(0) AS totalTimes-->
+<!--        FROM travel_information t-->
+<!--            LEFT JOIN employees e ON t.eno = e.eno-->
+<!--            LEFT JOIN employee_rank er on e.`rank` = er.`rank`-->
+<!--        WHERE t.passed = 1-->
+<!--            <if test=" ename != null and ename != '' ">-->
+<!--                AND e.ename LIKE '%' #{ename} '%'-->
+<!--            </if >-->
+<!--            <if test=" timeStart != null and timeStart != '' ">-->
+<!--                AND t.submit_time >= #{timeStart}-->
+<!--            </if>-->
+<!--            <if test=" timeEnd != null and timeEnd != '' ">-->
+<!--                AND DATE_ADD(#{timeEnd},INTERVAL 1 MONTH) > t.submit_time-->
+<!--            </if>-->
+<!--        GROUP BY t.eno-->
 
+<!--    </select>    -->
+    <select id="getReimbursementStatistics" resultType="java.util.Map">
+        SELECT
+            e.eno,
+            e.ename,
+            e.`rank`,
+            er.title,
+            IFNULL(pt.totalReimbursement, 0) AS totalReimbursement,
+            IFNULL(pt.totalTimes, 0) AS totalTimes
+        FROM
+            employees e
+                LEFT JOIN employee_rank er ON e.`rank` = er.`rank`
+                LEFT JOIN (
+                SELECT
+                    t.eno,
+                    SUM(t.total_reimbursement) AS totalReimbursement,
+                    count(0) AS totalTimes
+                FROM
+                    travel_information t
+                WHERE
+                    t.passed = 1
+                GROUP BY
+                    t.eno
+            ) pt ON pt.eno = e.eno
+        ORDER BY pt.totalReimbursement DESC
     </select>
 </mapper>
